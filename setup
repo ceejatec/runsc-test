@@ -1,0 +1,21 @@
+#!/bin/bash -ex
+
+# Populate the project and .cache directories
+rm -rf .cache
+mkdir .cache
+rm -rf mnt/.venv
+UV_PYTHON_INSTALL_DIR=.cache/python \
+UV_PYTHON_INSTALL_BIN=false \
+UV_MANAGED_PYTHON=true \
+UV_CACHE_DIR=.cache \
+uv --project mnt sync
+
+# Fix up a couple paths that will be wrong in the container
+PYTHON=$(readlink mnt/.venv/bin/python)
+ln -sf ../../..${PYTHON/$(pwd)} mnt/.venv/bin/python
+sed -i -e "s|$(pwd)||" mnt/.venv/pyvenv.cfg
+
+# Create root filesystem from astral/uv image
+sudo rm -rf rootfs
+mkdir rootfs
+docker export $(docker create astral/uv:debian) | sudo tar -xf - -C rootfs --same-owner --same-permissions

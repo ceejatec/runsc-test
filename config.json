@@ -1,0 +1,105 @@
+{
+    "ociVersion": "1.0.0",
+    "process": {
+        "user": {
+            "uid": 1000,
+            "gid": 1000
+        },
+        "args": [
+            "/usr/local/bin/uv", "run", "python", "main.py"
+        ],
+        "env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "TERM=xterm",
+            "UV_PYTHON_INSTALL_DIR=/.cache/python",
+            "UV_PYTHON_INSTALL_BIN=false"
+        ],
+        "cwd": "/mnt",
+        "capabilities": {
+            "bounding": [
+                "CAP_AUDIT_WRITE",
+                "CAP_KILL",
+                "CAP_NET_BIND_SERVICE"
+            ],
+            "effective": [
+                "CAP_AUDIT_WRITE",
+                "CAP_KILL",
+                "CAP_NET_BIND_SERVICE"
+            ],
+            "inheritable": [
+                "CAP_AUDIT_WRITE",
+                "CAP_KILL",
+                "CAP_NET_BIND_SERVICE"
+            ],
+            "permitted": [
+                "CAP_AUDIT_WRITE",
+                "CAP_KILL",
+                "CAP_NET_BIND_SERVICE"
+            ]
+        },
+        "rlimits": [
+            {
+                "type": "RLIMIT_NOFILE",
+                "hard": 1024,
+                "soft": 1024
+            }
+        ]
+    },
+    "root": {
+        "path": "rootfs",
+        "readonly": true
+    },
+    "hostname": "runsc",
+    "mounts": [
+        {
+            "destination": "/proc",
+            "type": "proc",
+            "source": "proc"
+        },
+        {
+            "destination": "/dev",
+            "type": "tmpfs",
+            "source": "tmpfs"
+        },
+        {
+            "destination": "/mnt",
+            "source": "mnt",
+            "options": [ "rbind" ]
+        },
+        {
+            "destination": "/.cache",
+            "source": ".cache",
+            "options": [ "rw", "rbind" ]
+        },
+        {
+            "destination": "/sys",
+            "type": "sysfs",
+            "source": "sysfs",
+            "options": [
+                "nosuid",
+                "noexec",
+                "nodev",
+                "ro"
+            ]
+        }
+    ],
+    "linux": {
+        "namespaces": [
+            {
+                "type": "pid"
+            },
+            {
+                "type": "network"
+            },
+            {
+                "type": "ipc"
+            },
+            {
+                "type": "uts"
+            },
+            {
+                "type": "mount"
+            }
+        ]
+    }
+}
