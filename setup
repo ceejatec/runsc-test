@@ -18,4 +18,4 @@ sed -i -e "s|$(pwd)||" project/.venv/pyvenv.cfg
 # Create root filesystem from astral/uv image
 sudo rm -rf rootfs
 mkdir rootfs
-docker export $(docker create astral/uv:debian) | sudo tar -xf - -C rootfs --same-owner --same-permissions
+docker export $(docker create astral/uv:debian-slim) | sudo tar -xf - -C rootfs --same-owner --same-permissions
