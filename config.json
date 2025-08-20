@@ -14,7 +14,7 @@
             "UV_PYTHON_INSTALL_DIR=/.cache/python",
             "UV_PYTHON_INSTALL_BIN=false"
         ],
-        "cwd": "/mnt",
+        "cwd": "/project",
         "capabilities": {
             "bounding": [
                 "CAP_AUDIT_WRITE",
@@ -62,8 +62,8 @@
             "source": "tmpfs"
         },
         {
-            "destination": "/mnt",
-            "source": "mnt",
+            "destination": "/project",
+            "source": "project",
             "options": [ "rbind" ]
         },
         {

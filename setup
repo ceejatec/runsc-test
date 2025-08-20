@@ -3,17 +3,17 @@
 # Populate the project and .cache directories
 rm -rf .cache
 mkdir .cache
-rm -rf mnt/.venv
+rm -rf project/.venv
 UV_PYTHON_INSTALL_DIR=.cache/python \
 UV_PYTHON_INSTALL_BIN=false \
 UV_MANAGED_PYTHON=true \
 UV_CACHE_DIR=.cache \
-uv --project mnt sync
+uv --project project sync
 
 # Fix up a couple paths that will be wrong in the container
-PYTHON=$(readlink mnt/.venv/bin/python)
-ln -sf ../../..${PYTHON/$(pwd)} mnt/.venv/bin/python
-sed -i -e "s|$(pwd)||" mnt/.venv/pyvenv.cfg
+PYTHON=$(readlink project/.venv/bin/python)
+ln -sf ../../..${PYTHON/$(pwd)} project/.venv/bin/python
+sed -i -e "s|$(pwd)||" project/.venv/pyvenv.cfg
 
 # Create root filesystem from astral/uv image
 sudo rm -rf rootfs
